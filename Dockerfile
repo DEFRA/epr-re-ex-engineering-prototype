@@ -9,7 +9,7 @@ ARG PORT
 ENV PORT=${PORT}
 
 COPY --chown=node:node package*.json ./
-RUN npm install
+RUN npm install --ignore-scripts
 COPY --chown=node:node ./app ./app
 
 CMD [ "npm", "run", "dev" ]
@@ -31,7 +31,7 @@ ENV NODE_ENV=production
 COPY --from=development /home/node/package*.json ./
 COPY --from=development /home/node/app ./app/
 
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 
 ARG PORT
 ENV PORT=${PORT}

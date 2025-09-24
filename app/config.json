@@ -1,5 +1,6 @@
 {
   "serviceName": "epr-re-ex-engineering-prototype",
+  "port": 2999,
   "plugins": {
     "govuk-frontend": {
       "rebrand": true
