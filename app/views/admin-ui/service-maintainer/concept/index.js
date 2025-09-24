@@ -1,3 +1,3 @@
-const selectAnOrganisation = require('./select-an-organisation')
-
-module.exports = [selectAnOrganisation]
+module.exports = [
+  require('./select-an-organisation')
+]

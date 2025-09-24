@@ -18,7 +18,10 @@ function loadOrgData() {
 }
 
 module.exports = function (router) {
-	router.get('/admin-ui/service-maintainer/concept/select-an-organisation', function (req, res, next) {
+	// resolves a dynamic url based on location within app/views/ directory
+	const urlPath = `/${__dirname.split('/views/').slice(1).join('/views/')}`
+
+	router.get(urlPath, function (req, res, next) {
 		const searchTerm = ((req.query && req.query['org-search']) || '').trim().toLowerCase()
 
 		const filterBySearchTerm = searchTerm.length
