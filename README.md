@@ -17,6 +17,21 @@ A lightweight application allowing engineers working on the `epr-re-ex` services
 <!-- TOC -->
 <!-- prettier-ignore-end -->
 
+## Supporting multiple prototyping activities
+
+The application is set up to allow multiple prototypes using a heirarchy of:
+
+- Application (either Admin UI or EPR Frontend)
+  - User role (for Admin UI: Service Maintainer or Regulator)
+    - Version of the UI: Approved / In-Review / Concept
+      - Individual journey
+
+This heirarchy is reflected within the
+- the table of contents rendered on the landing page for the prototype
+  - the table of contents is declared in `app/views/index.js`
+  - the table of contents is rendered in `app/views/index.html`
+- the view (`.html`) and handler (`.js`) code within the `app/views` directory
+
 ## Requirements
 
 ### Node.js
@@ -41,6 +56,23 @@ npm run dev
 ```
 
 It will accessible on `http://localhost:2999`
+
+## Add a page
+
+As an example, to add an "in-review" prototype for regulators to "cancel a PRN" in the Admin UI (which would be available at `http://localhost:2999/admin-ui/regulators/in-review/cancel-a-prn`)
+
+### Without backend logic
+
+- Add a `.html` file `app/views/admin-ui/regulators/in-review/cancel-a-prn.html` for rendering the view
+- Add an entry in the table of contents declared in `app/views/index.js` to show a link to the prototype opn the landing page
+
+### With backend logic
+
+- Add a handler at `app/views/admin-ui/regulators/in-review/cancel-a-prn/index.js`
+  - include the handler in the `module.exports` definition in `app/views/admin-ui/regulators/in-review/index.js`
+  - The handler takes a (Express) `router` object, and can register handlers for `GET`, `POST`, etc as appropriate
+- Add a `.html` file `app/views/admin-ui/regulators/in-review/cancel-a-prn/index.html` for rendering the view
+- Add an entry in the table of contents declared in `app/views/index.js` to show a link to the prototype opn the landing page
 
 ## GOV.UK Prototype Kit and GOV.UK Frontend
 
