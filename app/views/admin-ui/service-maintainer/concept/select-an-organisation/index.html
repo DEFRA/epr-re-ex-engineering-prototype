@@ -1,0 +1,78 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  Content page template – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% set orgRows = [] %}
+{% for org in data['select-an-organisation'].orgs %}
+  {% set statusHtml = ['<span>', org.status, '</span>'] | join %}
+
+  {% if org.statusColour %}
+  {% set statusHtml = ['<span class="govuk-tag govuk-tag--', org.statusColour, '">', org.status, '</span>'] | join %}
+  {% endif %}
+
+  {{ orgRows.push([
+    { text: org.name },
+    { text: org.orgId },
+    { html: statusHtml }
+  ]) }}
+{% endfor %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        Select an organisation
+      </h1>
+
+      <form class="form" method="get">
+
+        {{ govukInput({
+          label: {
+            text: "Search",
+            classes: "govuk-label--m"
+          },
+          hint: {
+            text: "Search for a company name or ID"
+          },
+          name: "org-search",
+          value: data['org-search']
+        }) }}
+
+        {{ govukButton({
+          text: "Search"
+        }) }}
+
+        <a href="?" class="govuk-link govuk-link--no-visited-state">Clear search</a>
+
+      </form>
+
+      {{ govukTable({
+        head: [
+          {
+            text: "Company Name"
+          },
+          {
+            text: "Organisation ID"
+          },
+          {
+            text: "Status"
+          }
+        ],
+        rows: orgRows
+      }) }}
+
+    </div>
+  </div>
+
+{% endblock %}

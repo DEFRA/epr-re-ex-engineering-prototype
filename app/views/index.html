@@ -11,6 +11,42 @@
       {{ serviceName }}
     </h1>
 
+    {% for application in data['tableOfContents'].applications %}
+      <h2 class="govuk-heading-l">{{application.name}}</h2>
+
+      {% for user in application.users %}
+        <h3 class="govuk-heading-m">{{user.name}}</h3>
+
+        <ul class="govuk-list">
+        {% for status in user.prototypeStatuses %}
+
+          {% set statusColour %}
+            {{status.colour if status.colour else 'grey'}}
+          {% endset %}
+          {% set tagColour = [ 'govuk-tag--', statusColour | trim ] | join %}
+
+          <li>
+            {{ govukTag({ text: status.name, classes: tagColour })}}
+
+            <ul>
+            {% if status.pages.length == 0 %}
+              <li>Nothing yet...</li>
+            {% endif %}
+
+            {% for page in status.pages %}
+              {% set href = [application.name, user.name, status.name, page] | join('/') | lower | replace(' ', '-') %}
+              <li>
+                <a class="govuk-link" href={{href}}>{{page}}</a>
+              </li>
+            {% endfor %}
+            </ul>
+
+          </li>
+        {% endfor %}
+        </ul>
+      {% endfor %}
+    {% endfor %}
+
   </div>
 </div>
 
