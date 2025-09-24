@@ -17,34 +17,31 @@ function loadOrgData() {
 		})
 }
 
-module.exports = function (router) {
-	// resolves a dynamic url based on location within app/views/ directory
-	const urlPath = `/${__dirname.split('/views/').slice(1).join('/views/')}`
+function GET(req, res, next) {
+	const searchTerm = ((req.query && req.query['org-search']) || '').trim().toLowerCase()
 
-	router.get(urlPath, function (req, res, next) {
-		const searchTerm = ((req.query && req.query['org-search']) || '').trim().toLowerCase()
+	const filterBySearchTerm = searchTerm.length
+		? org => [org.name, org.orgId]
+			.map(field => field.toLowerCase())
+			.find(field => field.includes(searchTerm))
+		: _ => true
 
-		const filterBySearchTerm = searchTerm.length
-			? org => [org.name, org.orgId]
-				.map(field => field.toLowerCase())
-				.find(field => field.includes(searchTerm))
-			: _ => true
+	const filteredOrgs = loadOrgData()
+		.map(rawOrg => ({
+			name: rawOrg.name,
+			orgId: rawOrg.orgId,
+			status: rawOrg.status,
+			statusColour: {
+				[APPROVED]: 'green',
+				[SUSPENDED]: 'red'
+			}[rawOrg.status]
+		}))
+		.filter(filterBySearchTerm)
 
-		const filteredOrgs = loadOrgData()
-			.map(rawOrg => ({
-				name: rawOrg.name,
-				orgId: rawOrg.orgId,
-				status: rawOrg.status,
-				statusColour: {
-					[APPROVED]: 'green',
-					[SUSPENDED]: 'red'
-				}[rawOrg.status]
-			}))
-			.filter(filterBySearchTerm)
+	res.locals.data['select-an-organisation'] = { orgs: filteredOrgs }
+	res.locals.data['org-search'] = searchTerm
 
-		res.locals.data['select-an-organisation'] = { orgs: filteredOrgs }
-		res.locals.data['org-search'] = searchTerm
-
-		next()
-	})
+	next()
 }
+
+module.exports = { GET }

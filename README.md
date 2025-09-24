@@ -26,11 +26,11 @@ The application is set up to allow multiple prototypes using a hierarchy of:
     - Version of the UI: Approved / In-Review / Concept
       - Individual journey
 
-This hierarchy is reflected within the
+This hierarchy is reflected in
 - the table of contents rendered on the landing page for the prototype
   - the table of contents is declared in `app/views/index.js`
   - the table of contents is rendered in `app/views/index.html`
-- the view (`.html`) and handler (`.js`) code within the `app/views` directory
+- the (convention-based) location of view (`.html`) and handler (`.js`) code within the `app/views/` directory
 
 ## Requirements
 
@@ -63,16 +63,16 @@ As an example, to add an "in-review" prototype for regulators to "cancel a PRN" 
 
 ### Without backend logic
 
-- Add a `.html` file `app/views/admin-ui/regulators/in-review/cancel-a-prn.html` for rendering the view
-- Add an entry in the table of contents declared in `app/views/index.js` to show a link to the prototype on the landing page
+- Add a `.html` file at `app/views/admin-ui/regulators/in-review/cancel-a-prn.html` for rendering the view
+- (optional) Add an entry in the table of contents declared in `app/views/index.js` to show a link to the prototype on the landing page
 
 ### With backend logic
 
-- Add a handler at `app/views/admin-ui/regulators/in-review/cancel-a-prn/index.js`
-  - include the handler in the `module.exports` definition in `app/views/admin-ui/regulators/in-review/index.js`
-  - The handler takes a (Express) `router` object, and can register handlers for `GET`, `POST`, etc as appropriate
 - Add a `.html` file `app/views/admin-ui/regulators/in-review/cancel-a-prn/index.html` for rendering the view
-- Add an entry in the table of contents declared in `app/views/index.js` to show a link to the prototype on the landing page
+- Add a handler at `app/views/admin-ui/regulators/in-review/cancel-a-prn/index.js` to
+  - export a `function GET (req, res, next)` - this will be invoked to handle GET requests
+  - export a `function POST (req, res, next)` - this will be invoked to handle POST requests
+- (optional) Add an entry in the table of contents declared in `app/views/index.js` to show a link to the prototype on the landing page
 
 ## GOV.UK Prototype Kit and GOV.UK Frontend
 

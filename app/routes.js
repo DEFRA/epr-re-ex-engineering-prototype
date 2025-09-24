@@ -8,4 +8,4 @@ const router = govukPrototypeKit.requests.setupRouter()
 
 const routes = require('./views')
 
-routes.forEach(register => register(router))
+routes.register(router)
