@@ -4,28 +4,23 @@ const path = require('path')
 // crawl through views directory (and sub-directory)
 // dynamically register routes (with url based on location within views/ directory) wherever
 // an exported GET or POST function is found
-function views(router) {
-  nestedDirectorys(__dirname).forEach(applicationPath => {
-    nestedDirectorys(applicationPath).forEach(userTypePath => {
-      nestedDirectorys(userTypePath).forEach(prototypeStatusPath => {
-        nestedDirectorys(prototypeStatusPath).forEach(prototypePath => {
-          const prototypeRelativePath = prototypePath.replace(__dirname, '')
+function views(router, basePath = __dirname) {
+  const relativePath = basePath.replace(__dirname, '')
+  try {
+    const handlers = require(`.${relativePath}`)
 
-          try {
-            const handlers = require(`.${prototypeRelativePath}`)
+    if (handlers.GET) {
+      router.get(relativePath, handlers.GET)
+    }
+    if (handlers.POST) {
+      router.post(relativePath, handlers.POST)
+    }
+  } catch (e) {
+    // ignore
+  }
 
-            if (handlers.GET) {
-              router.get(prototypeRelativePath, handlers.GET)
-            }
-            if (handlers.POST) {
-              router.post(prototypeRelativePath, handlers.POST)
-            }
-          } catch (e) {
-            // ignore
-          }
-        })
-      })
-    })
+  nestedDirectorys(basePath).forEach(nestedPath => {
+    views(router, nestedPath)
   })
 }
 
