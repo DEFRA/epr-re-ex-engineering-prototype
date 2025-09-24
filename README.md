@@ -26,11 +26,17 @@ The application is set up to allow multiple prototypes using a hierarchy of:
     - Version of the UI: Approved / In-Review / Concept
       - Individual journey
 
-This hierarchy is reflected in
-- the table of contents rendered on the landing page for the prototype
-  - the table of contents is declared in `app/views/index.js`
-  - the table of contents is rendered in `app/views/index.html`
-- the (convention-based) location of view (`.html`) and handler (`.js`) code within the `app/views/` directory
+This hierarchy is reflected in the table of contents rendered on the landing page for the prototype
+
+- the table of contents is declared in `app/views/index.js`
+- the table of contents is rendered in `app/views/index.html`
+
+Note that by convention
+- the application exposes a page at `http://localhost:2999/some/path` if either of the following exist
+  - `app/views/some/path.html`
+  - `app/views/some/path/index.html`
+- GET/POST handling code can be added by creating `app/views/some/path/index.js` and exporting a `GET` and/or `POST` function
+  - the application will automatically pick up these exported handlers
 
 ## Requirements
 
