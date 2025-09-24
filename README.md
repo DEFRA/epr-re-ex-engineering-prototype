@@ -2,6 +2,7 @@
 
 A lightweight application allowing engineers working on the `epr-re-ex` services to perform exploratory/protyping activities.
 
+<!-- prettier-ignore-start -->
 <!-- TOC -->
 - [Requirements](#requirements)
   - [Node.js](#nodejs)
@@ -14,6 +15,7 @@ A lightweight application allowing engineers working on the `epr-re-ex` services
 - [Licence](#licence)
   - [About the licence](#about-the-licence)
 <!-- TOC -->
+<!-- prettier-ignore-end -->
 
 ## Requirements
 
@@ -42,7 +44,7 @@ It will accessible on `http://localhost:2999`
 
 ## GOV.UK Prototype Kit and GOV.UK Frontend
 
-This is a light-weight application for prototyping. It is built on
+This is a lightweight application for prototyping. It is built on
 [GOV.UK Prototype Kit](https://github.com/alphagov/govuk-prototype-kit), a tool for building interactive
 prototypes that look like pages on GOV.UK, using components and styles from the
 [GOV.UK Frontend](https://github.com/alphagov/govuk-frontend). Both are provided by the
