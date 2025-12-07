@@ -17,6 +17,6 @@
     "govuk-prototype-kit": "13.18.1"
   },
   "devDependencies": {
-    "prettier": "3.7.3"
+    "prettier": "3.7.4"
   }
 }
