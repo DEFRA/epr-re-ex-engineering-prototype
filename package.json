@@ -11,6 +11,10 @@
     "format": "prettier --write \"**/*.{cjs,js,json,md}\"",
     "format:check": "prettier --check \"**/*.{cjs,js,json,md}\""
   },
+  "overrides": {
+    "qs": "6.14.1",
+    "lodash": "4.17.23"
+  },
   "dependencies": {
     "@govuk-prototype-kit/common-templates": "2.0.1",
     "govuk-frontend": "5.14.0",

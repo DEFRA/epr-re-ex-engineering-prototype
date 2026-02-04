@@ -18,7 +18,8 @@ function loadOrgData() {
 }
 
 function GET(req, res, next) {
-	const searchTerm = ((req.query && req.query['org-search']) || '').trim().toLowerCase()
+	const rawSearch = req.query?.['org-search']
+	const searchTerm = (typeof rawSearch === 'string' ? rawSearch : '').trim().toLowerCase()
 
 	const filterBySearchTerm = searchTerm.length
 		? org => [org.name, org.orgId]
